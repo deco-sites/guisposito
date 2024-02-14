@@ -16,17 +16,17 @@ export default function HeroFlats({
 }: Props) {
   return (
     <div>
-      <div className="mx-auto flex flex-col items-center gap-8 container sm:py-10">
+      <div className="mx-auto flex flex-col items-center gap-8 sm:py-10">
         {activeTitle && (
           <h1 className="inline-block text-28px leading-100% font-medium tracking--2.4px">
             {title}
           </h1>
         )}
         {description && (
-          <div id="hero-text">
+          <div id="hero-text" class="container">
             {activeReadMore
               ? (
-                <div class="max-w-[1220px] flex gap-[30px] relative mx-8 md:mx-auto">
+                <div class="container w-[95%] flex gap-[30px] relative mx-1 px-4 md:mx-auto mb-10">
                   <details className="peer absolute bottom-0 translate-y-full group ">
                     <summary className="text-sm text-neutral-1 font-lato py-2 px-6 border border-neutral-1 cursor-pointer list-none">
                       <span className="group-open:hidden">Ler mais</span>
@@ -41,7 +41,7 @@ export default function HeroFlats({
                       />
                     </div>
                   </div>
-                  <div class="h-10 w-[calc(100%-40px)] bg-gradient-to-b from-transparent to-white absolute bottom-0">
+                  <div class="h-10 w-[85%] container bg-gradient-to-b from-transparent to-white absolute bottom-0 ">
                   </div>
                 </div>
               )
