@@ -30,7 +30,7 @@ export interface HeroTop {
   activeReadMore?: boolean;
 }
 
-export interface HeroBottom{
+export interface HeroBottom {
   /** @format html */
   description?: string;
   activeReadMore?: boolean;
@@ -62,7 +62,7 @@ function Result({
   cardLayout,
   startingPage = 0,
   heroSeo,
-  heroTop = { activeTitle: true},
+  heroTop = { activeTitle: true },
   heroBottom,
 }: Omit<Props, "page"> & { page: ProductListingPage }) {
   const { products, filters, breadcrumb, pageInfo, sortOptions } = page;
@@ -113,25 +113,25 @@ function Result({
         <div class="flex justify-center my-4">
           <div class="join">
             {pageInfo.previousPage
-                ? (
-                  <a
-                    aria-label="previous page link"
-                    rel="prev"
-                    href={pageInfo.previousPage}
-                    class="btn btn-ghost join-item"
-                  >
-                    <Icon id="ChevronLeft" size={24} strokeWidth={2} />
-                  </a>
-                )
-                : (
-                  <a
-                    aria-label="previous page link"
-                    rel="prev"
-                    class="btn btn-ghost join-item"
-                    disabled
-                  >
-                    <Icon id="ChevronLeft" size={24} strokeWidth={2} />
-                  </a>
+              ? (
+                <a
+                  aria-label="previous page link"
+                  rel="prev"
+                  href={pageInfo.previousPage}
+                  class="btn btn-ghost join-item"
+                >
+                  <Icon id="ChevronLeft" size={24} strokeWidth={2} />
+                </a>
+              )
+              : (
+                <a
+                  aria-label="previous page link"
+                  rel="prev"
+                  class="btn btn-ghost join-item"
+                  disabled
+                >
+                  <Icon id="ChevronLeft" size={24} strokeWidth={2} />
+                </a>
               )}
             <span class="btn btn-ghost join-item">
               Page {zeroIndexedOffsetPage + 1}
@@ -157,7 +157,7 @@ function Result({
                   <Icon id="ChevronRight" size={24} strokeWidth={2} />
                 </a>
               )}
-              <Icon id="ChevronRight" size={24} strokeWidth={2} />
+            <Icon id="ChevronRight" size={24} strokeWidth={2} />
           </div>
         </div>
       </div>
