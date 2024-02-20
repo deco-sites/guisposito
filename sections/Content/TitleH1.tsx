@@ -26,7 +26,16 @@ export interface Props {
   fontColor?: string;
 }
 
-export type FontSize = "12px" | "14px" | "16px" | "18px" | "20px" | "24px" | "36px" | "48px" | "60px";
+export type FontSize =
+  | "12px"
+  | "14px"
+  | "16px"
+  | "18px"
+  | "20px"
+  | "24px"
+  | "36px"
+  | "48px"
+  | "60px";
 
 const sizeMapping: { [key in FontSize]: string } = {
   "12px": "xs",
@@ -65,9 +74,16 @@ export default function TitleComp({
 
   return (
     <div>
-      <div className={`mx-auto flex flex-col items-${align} gap-8 sm:py-10 px-6`}>
+      <div
+        className={`mx-auto flex flex-col items-${align} gap-8 sm:py-10 px-6`}
+      >
         {activeTitle && (
-          <h1 style={`color:${fontColor}`} className={`inline-block text-${fs} ${highlight ? "font-black" : "font-medium"} leading-100% tracking--2.4px`}>
+          <h1
+            style={`color:${fontColor}`}
+            className={`inline-block text-${fs} ${
+              highlight ? "font-black" : "font-medium"
+            } leading-100% tracking--2.4px`}
+          >
             {title}
           </h1>
         )}
