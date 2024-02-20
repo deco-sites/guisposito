@@ -9,6 +9,8 @@ import type { ProductListingPage } from "apps/commerce/types.ts";
 import { mapProductToAnalyticsItem } from "apps/commerce/utils/productToAnalyticsItem.ts";
 import ProductGallery, { Columns } from "../product/ProductGallery.tsx";
 import HeroSeo from "$store/components/search/HeroSEO.tsx";
+import { AppContext } from "../../apps/site.ts";
+
 
 export interface Layout {
   /**
@@ -54,6 +56,18 @@ function NotFound() {
       <span>Not Found!</span>
     </div>
   );
+}
+
+export const loader = (
+  props: Props,
+  _req: Request,
+  ctx: AppContext,
+) => {
+  if (!props.page || !props.page.products.length) {
+    ctx.response.status = 404;
+  }
+
+  return { ...props};
 }
 
 function Result({
@@ -192,7 +206,7 @@ function Result({
 }
 
 function SearchResult({ page, ...props }: Props) {
-  if (!page) {
+  if (!page || !page.products.length) {
     return <NotFound />;
   }
 
