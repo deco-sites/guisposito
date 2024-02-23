@@ -31,7 +31,7 @@
     "preview": "deno run -A main.ts"
   },
   "githooks": {
-    "pre-commit": "check"
+    "pre-commit": "deno fmt && deno lint && deno check dev.ts main.ts"
   },
   "exclude": [
     "node_modules",

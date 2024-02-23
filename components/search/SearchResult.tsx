@@ -22,6 +22,15 @@ export interface Layout {
   columns?: Columns;
 }
 
+
+
+
+
+
+
+
+
+
 export interface HeroTop {
   title?: string;
   activeTitle?: boolean;
