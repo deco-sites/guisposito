@@ -18,8 +18,9 @@ import * as $$$$$$10 from "./sections/Content/HeroSEO.tsx";
 import * as $$$$$$11 from "./sections/Content/ImageSection.tsx";
 import * as $$$$$$12 from "./sections/Content/Logos.tsx";
 import * as $$$$$$13 from "./sections/Content/RichText.tsx";
-import * as $$$$$$14 from "./sections/Content/Table.tsx";
-import * as $$$$$$15 from "./sections/Content/Testimonials.tsx";
+import * as $$$$$$14 from "./sections/Content/SeoCustom.tsx";
+import * as $$$$$$15 from "./sections/Content/Table.tsx";
+import * as $$$$$$16 from "./sections/Content/Testimonials.tsx";
 import * as $$$$$$17 from "./sections/Content/TitleH1.tsx";
 import * as $$$$$$18 from "./sections/Footer/Footer.tsx";
 import * as $$$$$$19 from "./sections/Gallery.tsx";
@@ -74,8 +75,9 @@ const manifest = {
     "deco-sites/guisposito/sections/Content/ImageSection.tsx": $$$$$$11,
     "deco-sites/guisposito/sections/Content/Logos.tsx": $$$$$$12,
     "deco-sites/guisposito/sections/Content/RichText.tsx": $$$$$$13,
-    "deco-sites/guisposito/sections/Content/Table.tsx": $$$$$$14,
-    "deco-sites/guisposito/sections/Content/Testimonials.tsx": $$$$$$15,
+    "deco-sites/guisposito/sections/Content/SeoCustom.tsx": $$$$$$14,
+    "deco-sites/guisposito/sections/Content/Table.tsx": $$$$$$15,
+    "deco-sites/guisposito/sections/Content/Testimonials.tsx": $$$$$$16,
     "deco-sites/guisposito/sections/Content/TitleH1.tsx": $$$$$$17,
     "deco-sites/guisposito/sections/Footer/Footer.tsx": $$$$$$18,
     "deco-sites/guisposito/sections/Gallery.tsx": $$$$$$19,
