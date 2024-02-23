@@ -11,7 +11,7 @@ export interface jsonLdOrganizationProps {
       streetAddress: string;
       addressLocality: string;
       addressRegion: string;
-      addresCountry: string;
+      addressCountry: string;
       postalCode: string;
     };
     email: string;
