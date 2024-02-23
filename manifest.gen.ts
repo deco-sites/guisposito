@@ -74,7 +74,7 @@ const manifest = {
     "deco-sites/guisposito/sections/Content/HeroSEO.tsx": $$$$$$10,
     "deco-sites/guisposito/sections/Content/ImageSection.tsx": $$$$$$11,
     "deco-sites/guisposito/sections/Content/Logos.tsx": $$$$$$12,
-    "deco-sites/guisposito/sections/Content/RichText.tsx": $$$$$$13,
+    "deco-sites/guisposito/sections/Content/RichText.tsx": $$$$$$13,    
     "deco-sites/guisposito/sections/Content/SeoCustom.tsx": $$$$$$14,
     "deco-sites/guisposito/sections/Content/Table.tsx": $$$$$$15,
     "deco-sites/guisposito/sections/Content/Testimonials.tsx": $$$$$$16,
