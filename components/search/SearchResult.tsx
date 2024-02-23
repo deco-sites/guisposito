@@ -11,7 +11,6 @@ import ProductGallery, { Columns } from "../product/ProductGallery.tsx";
 import HeroSeo from "$store/components/search/HeroSEO.tsx";
 import { AppContext } from "../../apps/site.ts";
 
-
 export interface Layout {
   /**
    * @description Use drawer for mobile like behavior on desktop. Aside for rendering the filters alongside the products
@@ -67,8 +66,8 @@ export const loader = (
     ctx.response.status = 404;
   }
 
-  return { ...props};
-}
+  return { ...props };
+};
 
 function Result({
   page,
