@@ -8,6 +8,7 @@ import { useOffer } from "$store/sdk/useOffer.ts";
 import type { ProductListingPage } from "apps/commerce/types.ts";
 import { mapProductToAnalyticsItem } from "apps/commerce/utils/productToAnalyticsItem.ts";
 import ProductGallery, { Columns } from "../product/ProductGallery.tsx";
+import { AppContext } from "../../apps/site.ts";
 import HeroSeo from "$store/components/search/HeroSEO.tsx";
 
 export interface Layout {
@@ -55,6 +56,18 @@ function NotFound() {
     </div>
   );
 }
+
+export const loader = (
+  props: Props,
+  _req: Request,
+  ctx: AppContext,
+) => {
+  if (!props.page || !props.page.products.length) {
+    ctx.response.status = 404;
+  }
+
+  return { ...props };
+};
 
 function Result({
   page,
