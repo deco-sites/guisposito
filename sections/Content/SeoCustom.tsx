@@ -31,11 +31,16 @@ export interface jsonLdWebsiteProps {
 }
 
 export interface Props {
+  index?:
+    | "index, follow"
+    | "index, nofollow"
+    | "noindex, nofollow";
   organizationData?: jsonLdOrganizationProps;
   websiteData?: jsonLdWebsiteProps;
 }
 
 export default function SeoCustom({
+  index = "index, follow",
   organizationData,
   websiteData,
 }: Props) {
@@ -100,6 +105,8 @@ export default function SeoCustom({
 
   return (
     <Head>
+      {index &&
+        <meta name="robots" content={index} />}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
