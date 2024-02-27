@@ -24,7 +24,7 @@ export interface Props {
    * @format color
    */
   fontColor?: string;
-  tagtitle?: "h1" | "h2" | "h3" | "h4" ;
+  tagtitle?: "h1" | "h2" | "h3" | "h4";
 }
 
 export type FontSize =

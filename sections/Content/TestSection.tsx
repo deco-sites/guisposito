@@ -1,18 +1,16 @@
 import type { ImageWidget } from "apps/admin/widgets.ts";
 
 export interface image {
-    src: ImageWidget;
-    alt: string;
-    width?: number;
-    height?: number;
-  }
-
+  src: ImageWidget;
+  alt: string;
+  width?: number;
+  height?: number;
+}
 
 export interface Props {
   /**
    * @title Post body.
    * @format color
-   * 
    */
   post: string;
   /**
@@ -24,8 +22,8 @@ export interface Props {
    * @title Post title.
    */
   title: string;
-   /** @title ImagePost */
-   photo?: image;
+  /** @title ImagePost */
+  photo?: image;
 }
 
 export default function LatestPosts({ title, photo }: Props) {

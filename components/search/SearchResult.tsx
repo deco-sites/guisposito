@@ -8,6 +8,7 @@ import { useOffer } from "$store/sdk/useOffer.ts";
 import type { ProductListingPage } from "apps/commerce/types.ts";
 import { mapProductToAnalyticsItem } from "apps/commerce/utils/productToAnalyticsItem.ts";
 import ProductGallery, { Columns } from "../product/ProductGallery.tsx";
+import { AppContext } from "../../apps/site.ts";
 import HeroSeo from "$store/components/search/HeroSEO.tsx";
 
 export interface Layout {
@@ -38,11 +39,13 @@ export interface HeroBottom {
 
 export interface Props {
   /** @title Integration */
-  page: ProductListingPage | null;
+  page?: ProductListingPage | null;
   layout?: Layout;
   cardLayout?: CardLayout;
   /** @description 0 for ?page=0 as your first page */
   startingPage?: 0 | 1;
+  /** @description max nunber of items in pagination */
+  maxVisiblePages?: number;
   heroSeo?: typeof HeroSeo;
   heroTop?: HeroTop;
   heroBottom?: HeroBottom;
@@ -56,23 +59,62 @@ function NotFound() {
   );
 }
 
+export const loader = (
+  props: Props,
+  _req: Request,
+  ctx: AppContext,
+) => {
+  if (!props.page || !props.page.products.length) {
+    ctx.response.status = 404;
+  }
+
+  return { ...props };
+};
+
 function Result({
   page,
   layout,
   cardLayout,
   startingPage = 0,
+  maxVisiblePages = 5,
   heroSeo,
   heroTop = { activeTitle: true },
   heroBottom,
 }: Omit<Props, "page"> & { page: ProductListingPage }) {
-  const { products, filters, breadcrumb, pageInfo, sortOptions } = page;
+  const { products, filters, breadcrumb, pageInfo, sortOptions, seo } = page;
   const perPage = pageInfo.recordPerPage || products.length;
   const categoryName = breadcrumb.itemListElement?.at(-1)?.name;
+
+  const regex = /&filter\.[^&=]+/g;
+
+  const hasFilter = pageInfo.nextPage
+    ? pageInfo.nextPage?.match(regex)
+    : pageInfo.previousPage?.match(regex);
+
+  const currentPage = pageInfo.currentPage ?? 1;
+  const totalPages = pageInfo.recordPerPage
+    ? pageInfo?.records && Math.round(pageInfo.records / pageInfo.recordPerPage)
+    : 0;
 
   const id = useId();
 
   const zeroIndexedOffsetPage = pageInfo.currentPage - startingPage;
   const offset = zeroIndexedOffsetPage * perPage;
+
+  const pages = [];
+  let startPage = Math.max(1, currentPage - Math.floor(maxVisiblePages / 2));
+  const endPage = Math.min(
+    totalPages ? totalPages : 0,
+    startPage + maxVisiblePages - 1,
+  );
+
+  if (endPage - startPage + 1 < maxVisiblePages) {
+    startPage = Math.max(1, endPage - maxVisiblePages + 1);
+  }
+
+  for (let i = startPage; i <= endPage; i++) {
+    pages.push(i);
+  }
 
   return (
     <>
@@ -110,56 +152,83 @@ function Result({
           </div>
         </div>
 
-        <div class="flex justify-center my-4">
-          <div class="join">
-            {pageInfo.previousPage
-              ? (
+        {!hasFilter
+          ? (
+            <div class="flex justify-center my-4">
+              <div class="join gap-2">
                 <a
                   aria-label="previous page link"
+                  disabled={currentPage <= 1}
+                  rel="prev"
+                  href={currentPage <= 2
+                    ? seo?.canonical?.split("?")[0]
+                    : `?page=${currentPage - 1}`}
+                  class="btn bg-white hover:bg-gray-100 text-gray-800 font-semibold py-1 px-2 border border-gray-400 rounded shadow"
+                >
+                  <Icon id="ChevronLeft" size={24} strokeWidth={2} />
+                </a>
+                {pages.map((pageNumber) => (
+                  <a
+                    key={pageNumber}
+                    href={pageNumber <= 1
+                      ? seo?.canonical?.split("?")[0]
+                      : `?page=${pageNumber}`}
+                    disabled={currentPage == pageNumber}
+                    class="mx-1 btn bg-white hover:bg-gray-100 text-gray-800 font-semibold py-1 px-2 border border-gray-400 rounded shadow"
+                  >
+                    {pageNumber}
+                  </a>
+                ))}
+                <a
+                  aria-label="next page link"
+                  disabled={totalPages ? currentPage >= totalPages : true}
+                  rel="next"
+                  href={`?page=${currentPage + 1}`}
+                  class="btn bg-white hover:bg-gray-100 text-gray-800 font-semibold py-1 px-2 border border-gray-400 rounded shadow"
+                >
+                  <Icon id="ChevronRight" size={24} strokeWidth={2} />
+                </a>
+              </div>
+            </div>
+          )
+          : (
+            <div class="flex justify-center my-4">
+              <div class="join gap-2">
+                <a
+                  aria-label="previous page link"
+                  disabled={currentPage <= 1}
                   rel="prev"
                   href={pageInfo.previousPage}
-                  class="btn btn-ghost join-item"
+                  class="btn bg-white hover:bg-gray-100 text-gray-800 font-semibold py-1 px-2 border border-gray-400 rounded shadow"
                 >
                   <Icon id="ChevronLeft" size={24} strokeWidth={2} />
                 </a>
-              )
-              : (
-                <a
-                  aria-label="previous page link"
-                  rel="prev"
-                  class="btn btn-ghost join-item"
-                  disabled
-                >
-                  <Icon id="ChevronLeft" size={24} strokeWidth={2} />
-                </a>
-              )}
-            <span class="btn btn-ghost join-item">
-              Page {zeroIndexedOffsetPage + 1}
-            </span>
-            {pageInfo.nextPage
-              ? (
+                {pages.map((pageNumber) => (
+                  <a
+                    key={pageNumber}
+                    href={pageInfo.nextPage
+                      ? pageInfo.nextPage?.split("&page=")[0] +
+                        `&page=${pageNumber}`
+                      : pageInfo.previousPage?.split("&page=")[0] +
+                        `&page=${pageNumber}`}
+                    disabled={currentPage == pageNumber}
+                    class="mx-1 btn bg-white hover:bg-gray-100 text-gray-800 font-semibold py-1 px-3 border border-gray-400 rounded shadow"
+                  >
+                    {pageNumber}
+                  </a>
+                ))}
                 <a
                   aria-label="next page link"
+                  disabled={totalPages ? currentPage >= totalPages : true}
                   rel="next"
                   href={pageInfo.nextPage}
-                  class="btn btn-ghost join-item"
+                  class="btn bg-white hover:bg-gray-100 text-gray-800 font-semibold py-1 px-2 border border-gray-400 rounded shadow"
                 >
                   <Icon id="ChevronRight" size={24} strokeWidth={2} />
                 </a>
-              )
-              : (
-                <a
-                  aria-label="next page link"
-                  rel="next"
-                  class="btn btn-ghost join-item"
-                  disabled
-                >
-                  <Icon id="ChevronRight" size={24} strokeWidth={2} />
-                </a>
-              )}
-            <Icon id="ChevronRight" size={24} strokeWidth={2} />
-          </div>
-        </div>
+              </div>
+            </div>
+          )}
       </div>
       <HeroSeo
         {...{
