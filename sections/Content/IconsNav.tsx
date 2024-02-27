@@ -3,29 +3,28 @@ import SliderJS from "$store/islands/SliderJS.tsx";
 import type { ImageWidget } from "apps/admin/widgets.ts";
 
 export interface Props {
-    /**
-     * @title Icones navegacionais
-     */
-    icons: Icons[];
+  /**
+   * @title Icones navegacionais
+   */
+  icons: Icons[];
 }
 
 export type Icons = {
-    iconImage:ImageWidget,
-    iconText: string;
-    iconUrl: string;
-}
-
+  iconImage: ImageWidget;
+  iconText: string;
+  iconUrl: string;
+};
 
 export default function IconsNav({
-    icons,
+  icons,
 }: Props) {
-
-
-    return(
-        <div>
-            <h1>${icons}</h1>
-            <Slider></Slider>
-            <SliderJS></SliderJS>
-        </div>
-    )
+  return (
+    <div>
+      {
+        /* <h1>${icons}</h1>
+      <Slider></Slider>
+      <SliderJS></SliderJS> */
+      }
+    </div>
+  );
 }
