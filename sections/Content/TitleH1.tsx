@@ -24,6 +24,7 @@ export interface Props {
    * @format color
    */
   fontColor?: string;
+  tagtitle?: "h1" | "h2" | "h3" | "h4";
 }
 
 export type FontSize =
@@ -56,6 +57,7 @@ export default function TitleComp({
   fontSize,
   highlight,
   fontColor,
+  tagtitle,
 }: Props) {
   let align;
 
