@@ -75,7 +75,7 @@ export default function TitleComp({
   const fs = sizeMapping[fontSize || "16px"]; // Se fontSize for indefinido, use "16px" como padrão
 
   return (
-    <div>
+    <div> 
       <div
         className={`mx-auto flex flex-col items-${align} gap-8 sm:py-10 px-6`}
       >
