@@ -1,3 +1,4 @@
+import { h } from "preact";
 import Slider from "$store/components/ui/Slider.tsx";
 import SliderJS from "$store/islands/SliderJS.tsx";
 import { useId } from "$store/sdk/useId.ts";
@@ -22,8 +23,28 @@ export interface Props {
    * @title Icones navegacionais
    */
   icons?: IconItem[];
+  /**
+   * @title Titulo da sessao
+   */
+  sectionTitle?: {
+    showTitleSection?: boolean;
+    /**
+     * @title Tag do Titulo
+     */
+    titleSection?: "h1" | "h2" | "h3" | "h4" | "h5";
+    /**
+     * @title Titulo da sessao
+     */
+    titleContent?: string;
+    fontSize?: "20px" | "24px" | "36px" | "48px" | "60px";
+  };
   width: number;
   height: number;
+  /**
+   * @title Icon Text font color
+   * @format color
+   */
+  fontColor?: string;
   /**
    * @title Image border radius
    */
@@ -44,10 +65,45 @@ export interface Props {
 }
 
 export default function IconsNav(
-  { icons, width, height, borderImg = "roundedNone", layout }: Props,
+  {
+    icons,
+    sectionTitle,
+    width,
+    height,
+    fontColor,
+    borderImg = "roundedNone",
+    layout,
+  }: Props,
 ) {
   const id = useId();
   const aspectRatio = `${width} / ${height}`;
+
+  const fontSize = sectionTitle?.fontSize ?? "36px";
+  const fontSizeMap = {
+    "20px": "xl",
+    "24px": "2xl",
+    "36px": "4xl",
+    "48px": "5xl",
+    "60px": "6xl",
+  };
+
+  const tagTitle: Record<"h1" | "h2" | "h3" | "h4" | "h5", string> = {
+    h1: "h1",
+    h2: "h2",
+    h3: "h3",
+    h4: "h4",
+    h5: "h5",
+  };
+
+  const TitleSection = (
+    { level, children }: {
+      level: keyof typeof tagTitle;
+      children: h.JSX.Element;
+    },
+  ) => {
+    const Tag = tagTitle[level] as keyof h.JSX.IntrinsicElements;
+    return <Tag class={`text-${fontSizeMap[fontSize]}`}>{children}</Tag>;
+  };
 
   const slideDesktop = {
     1: "md:w-full",
@@ -75,7 +131,17 @@ export default function IconsNav(
 
   return (
     <div class="icons-nav w-full h-[300px] flex flex-col justify-center items-center my-10">
-      <div id={id} class="slider-content relative">
+      {sectionTitle?.showTitleSection &&
+        (
+          <div
+            class={`text-center my-5`}
+          >
+            <TitleSection level={sectionTitle?.titleSection || "h3"}>
+              <>{sectionTitle?.titleContent ?? ""}</>
+            </TitleSection>
+          </div>
+        )}
+      <div id={id} class="slider-content relative text-x">
         <Slider class="carousel carousel-center">
           {icons?.map((icon, index) => {
             return (
@@ -95,7 +161,10 @@ export default function IconsNav(
                       width={width}
                       height={height}
                     />
-                    <p class={`my-2 px-2 max-w-[${width}px] text-sm`}>
+                    <p
+                      class={`my-2 px-2 max-w-[${width}px] text-sm`}
+                      style={`color:${fontColor}`}
+                    >
                       {icon.text}
                     </p>
                   </a>
