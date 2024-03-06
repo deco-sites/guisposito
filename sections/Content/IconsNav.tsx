@@ -141,8 +141,11 @@ export default function IconsNav(
             </TitleSection>
           </div>
         )}
-      <div id={id} class="slider-content relative w-full max-sm:px-3 md:px-10 lg:px-20 flex items-center justify-center flex-col">
-        <Slider class="carousel carousel-center max-sm:gap-2 md:gap-2 w-full">
+      <div
+        id={id}
+        class="slider-content relative w-full max-sm:px-3 md:px-10 lg:px-20 flex items-center justify-center flex-col"
+      >
+        <Slider class="carousel max-sm:gap-2 md:gap-2 w-full">
           {icons?.map((icon, index) => {
             return (
               <Slider.Item
