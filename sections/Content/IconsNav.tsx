@@ -56,7 +56,7 @@ export interface Props {
     };
     showArrows?: boolean;
     /**
-     * @title Autoplay interval
+     * @title Animação do dot
      * @description time (in seconds) to start the carousel autoplay
      */
     interval?: number;
@@ -134,15 +134,15 @@ export default function IconsNav(
       {sectionTitle?.showTitleSection &&
         (
           <div
-            class={`text-center my-5`}
+            class={`text-center my-7`}
           >
             <TitleSection level={sectionTitle?.titleSection || "h3"}>
               <>{sectionTitle?.titleContent ?? ""}</>
             </TitleSection>
           </div>
         )}
-      <div id={id} class="slider-content relative text-x">
-        <Slider class="carousel carousel-center">
+      <div id={id} class="slider-content relative w-full max-sm:px-3 md:px-10 lg:px-20 flex items-center justify-center flex-col">
+        <Slider class="carousel carousel-center max-sm:gap-2 md:gap-2 w-full">
           {icons?.map((icon, index) => {
             return (
               <Slider.Item
@@ -154,7 +154,7 @@ export default function IconsNav(
                 <div class="icon-nav flex justify-center text-center">
                   <a class={`w-[${width}px]`} href={icon.url!}>
                     <img
-                      class={`${borderRadius[borderImg]}`}
+                      class={`${borderRadius[borderImg]} object-cover`}
                       style={{ aspectRatio }}
                       src={icon.image}
                       alt={icon.altText}
@@ -174,21 +174,21 @@ export default function IconsNav(
           })}
         </Slider>
         {layout?.showArrows && (
-          <div class="">
+          <>
             <Slider.PrevButton
-              class="no-animation absolute left-2 top-1/4 btn btn-circle"
+              class="absolute lg:left-10 max-lg:left-2  top-1/4 btn btn-circle"
               disabled
             >
               <Icon size={24} id="ChevronLeft" strokeWidth={3} />
             </Slider.PrevButton>
 
             <Slider.NextButton
-              class="no-animation absolute right-2 top-1/4 btn btn-circle"
+              class="absolute lg:right-10 max-lg:right-2 top-1/4 btn btn-circle"
               disabled
             >
               <Icon size={24} id="ChevronRight" strokeWidth={3} />
             </Slider.NextButton>
-          </div>
+          </>
         )}
         {layout?.showDots && (
           <>
@@ -209,7 +209,7 @@ export default function IconsNav(
                   <Slider.Dot index={index}>
                     <div class="my-8">
                       <div
-                        class="w-2.5 h-0.5 rounded group-disabled:animate-progress bg-gradient-to-r from-gray-800 from-[length:var(--dot-progress)] to-[rgba(26,26,26,0.4)] to-[length:var(--dot-progress)]"
+                        class="w-2.5 h-0.5 roundedbg group-disabled:animate-progress bg-gradient-to-r from-gray-800 from-[length:var(--dot-progress)] to-[rgba(26,26,26,0.4)] to-[length:var(--dot-progress)]"
                         style={{ animationDuration: `${layout?.interval}s` }}
                       />
                     </div>
